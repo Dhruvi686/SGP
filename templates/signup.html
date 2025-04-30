@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-style">
+	<h1>Sign Up</h1>
+	<form class="site-form" action="{% url 'signup' %}" method="post">
+		{% csrf_token %}
+		{% for field in form %}
+		<div class="form-group">
+			{{ field.label_tag }}
+			{{ field }}
+			{% if field.errors %}
+			<div class="alert alert-danger">
+				{% for error in field.errors %}
+					{{ error }}
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		{% endfor %}
+		<br>
+		<div style="text-align: center;">
+			<input class="submit" type="submit" value="Sign Up" style="background-color: #feda6a; color: black; font-weight: bold; padding: 10px 30px; border: none; cursor: pointer; font-size: 18px;">
+		</div>
+	</form>
+	<div style="text-align: center; margin-top: 20px;">
+		<p style="color: white; font-size: 16px;">Already have an account? 
+			<a href="{% url 'login' %}" style="color: #feda6a; text-decoration: none; font-size: 20px; font-weight: bold;">Login here</a>
+		</p>
+	</div>
+</div>
+
+<style>
+.form-style {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	color: white;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.alert-danger {
+	color: #721c24;
+	background-color: #f8d7da;
+	border: 1px solid #f5c6cb;
+	padding: 8px 12px;
+	margin-top: 5px;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.submit:hover {
+	background-color: #e5c55f !important;
+	transition: background-color 0.3s ease;
+}
+
+.form-text {
+	color: #888;
+	font-size: 12px;
+	margin-top: 5px;
+}
+</style>
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		// Add form submission handling
+		const form = document.querySelector('.site-form');
+		form.addEventListener('submit', function(e) {
+			const submitBtn = form.querySelector('input[type="submit"]');
+			submitBtn.value = 'Signing up...';
+			submitBtn.disabled = true;
+		});
+	});
+</script>
+{% endblock %} 

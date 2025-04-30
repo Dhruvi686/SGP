@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-style">
+    <h1>User Statistics</h1>
+    <div class="stats-container">
+        <div class="stat-box">
+            <h3>Total Users</h3>
+            <p class="stat-number">{{ total_users }}</p>
+        </div>
+        <div class="stat-box">
+            <h3>Active Sessions</h3>
+            <p class="stat-number">{{ active_sessions }}</p>
+        </div>
+        <div class="stat-box">
+            <h3>Online Users</h3>
+            <p class="stat-number">{{ online_users }}</p>
+        </div>
+    </div>
+
+    {% if user.is_superuser %}
+    <div class="user-list">
+        <h2>Currently Online Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Last Login</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in online_user_list %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.last_login|date:"M d, Y H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.form-style {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    color: white;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.stat-box {
+    flex: 1;
+    margin: 0 15px;
+    padding: 20px;
+    background-color: rgba(254, 218, 106, 0.1);
+    border: 2px solid #feda6a;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-box h3 {
+    margin: 0;
+    color: #feda6a;
+    font-size: 18px;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 10px 0 0;
+    color: white;
+}
+
+.user-list {
+    margin-top: 40px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(254, 218, 106, 0.3);
+}
+
+th {
+    background-color: rgba(254, 218, 106, 0.2);
+    color: #feda6a;
+}
+
+tr:hover {
+    background-color: rgba(254, 218, 106, 0.1);
+}
+</style>
+{% endblock %} 

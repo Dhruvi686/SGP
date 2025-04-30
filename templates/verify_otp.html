@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-style">
+    <h1>Verify Your Email</h1>
+    <div class="info-text">
+        <p>Please enter the 6-digit OTP sent to your email address:</p>
+        <p class="email-display">{{ user.email }}</p>
+    </div>
+    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="site-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.otp }}
+        </div>
+        <div style="text-align: center;">
+            <input type="submit" value="Verify OTP" class="submit">
+        </div>
+        <div class="resend-link">
+            <p>Didn't receive the OTP? <a href="{% url 'signup' %}">Try again</a></p>
+        </div>
+    </form>
+</div>
+
+<style>
+.form-style {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    border-radius: 10px;
+}
+
+.info-text {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.email-display {
+    font-weight: bold;
+    color: #feda6a;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #feda6a;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 5px;
+}
+
+.submit {
+    background-color: #feda6a;
+    color: black;
+    font-weight: bold;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #e5c55f;
+}
+
+.resend-link {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.resend-link a {
+    color: #feda6a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.resend-link a:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+</style>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Focus on OTP input when page loads
+        const otpInput = document.querySelector('input[name="otp"]');
+        if (otpInput) {
+            otpInput.focus();
+        }
+
+        // Add form submission handling
+        const form = document.querySelector('.site-form');
+        form.addEventListener('submit', function(e) {
+            const submitBtn = form.querySelector('input[type="submit"]');
+            submitBtn.value = 'Verifying...';
+            submitBtn.disabled = true;
+        });
+    });
+</script>
+{% endblock %} 
